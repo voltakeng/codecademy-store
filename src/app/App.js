@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Cart } from '../features/cart/Cart'; 
-import { Inventory } from '../features/inventory/Inventory'
+import { Inventory } from '../features/inventory/Inventory';
 import { CurrencyFilter } from '../features/currencyFilter/CurrencyFilter';
 import { SearchTerm } from '../features/searchTerm/SearchTerm';
 
