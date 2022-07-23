@@ -1,69 +1,55 @@
-import React from 'react';
-import {
-  calculateTotal,
-  getCurrencySymbol,
-} from '../../utilities/utilities.js';
-
-// Import the changeItemQuantity() action creator.
-import { changeItemQuantity } from './cartSlice.js';
-
-export const Cart = (props) => {
-  const { cart, currencyFilter, dispatch } = props;
-
-  const onInputChangeHandler = (name, input) => {
-    // If the user enters a bad value...
-    if (input === '') {
-      return;
-    }
-
-    // Otherwise, convert the input into a number and pass it along as the newQuantity.
-    const newQuantity = Number(input);
-
-    // Dispatch an action to change the quantity of the given name and quantity.
-    dispatch(changeItemQuantity(name, newQuantity))
-
+export const addItem = (itemToAdd) => {
+    return {
+      type: 'cart/addItem',
+      payload: itemToAdd
+    };
   };
-
-  // Use the cart and currencyFilter slices to render their data.
-  const cartElements = 'REPLACE_ME';
-  const total = 0;
-
-  return (
-    <div id="cart-container">
-      <ul id="cart-items">{cartElements}</ul>
-      <h3 className="total">
-        Total{' '}
-        <span className="total-value">
-          {getCurrencySymbol(currencyFilter)}{total} {currencyFilter}
-        </span>
-      </h3>
-    </div>
-  );
-
-  function createCartItem(name) {
-    const item = cart[name];
-
-    if (item.quantity === 0) {
-      return;
-    }
-
-    return (
-      <li key={name}>
-        <p>{name}</p>
-        <select
-          className="item-quantity"
-          value={item.quantity}
-          onChange={(e) => {
-            onInputChangeHandler(name, e.target.value);
-          }}
-        >
-          {[...Array(100).keys()].map((_, index) => (
-            <option key={index} value={index}>
-              {index}
-            </option>
-          ))}
-        </select>
-      </li>
-    );
-  }
+  
+// Create your changeItemQuantity action creator here.
+export const changeItemQuantity = (name, newQuantity) => {
+    return{
+        type: 'cart/changeItemQuantity',
+        payload: {
+          name: name,
+          newQuantity: newQuantity
+        }
+    };
 };
+  
+  const initialCart = {};
+  export const cartReducer = (cart = initialCart, action) => {
+    switch (action.type) {
+      case 'cart/addItem': {
+        const { name, price } = action.payload;
+  
+        // if the item already exists, increase the quantity by 1, otherwise set it to 1
+        const quantity = cart[name] ? cart[name].quantity + 1 : 1;
+        const newItem = { price, quantity };
+  
+        // Add the new item to the cart (or replace it if it existed already)
+        return { 
+          ...cart, 
+          [name]: newItem 
+        };
+      }
+      case 'cart/changeItemQuantity': {
+        const { name, newQuantity } = action.payload;
+        const itemToUpdate = cart[name];
+  
+        // Create a copy of itemToUpdate and update the quantity prop.
+        const updateItem = {
+          ...itemToUpdate,
+          quantity: newQuantity
+        }
+  
+        // Return a copy of the cart with the updatedItem included.
+        return {
+            ...cart,
+            [name]: updateItem
+        };
+      }
+      default: {
+        return cart;
+      }
+    }
+  };

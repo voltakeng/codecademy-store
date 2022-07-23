@@ -1,4 +1,4 @@
-import { inventoryData } from '../../../data.js';
+import { inventoryData } from '../../utilities/data';
 
 export const loadData = (data) => {
   return {
