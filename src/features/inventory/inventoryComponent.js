@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import {
   calculatePrice,
   getCurrencySymbol,
-} from '../../utilities/utilities.js';
+} from '../../utilities/utilitiesFunctions.js';
 import { addItem } from '../cart/cartSlice.js';
 import { loadData } from './inventorySlice';
 

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Cart } from '../features/cart/Cart'; 
-import { Inventory } from '../features/inventory/Boxinventory';
-import { CurrencyFilter } from '../features/currencyFilter/CurrencyFilter';
-import { SearchTerm } from '../features/searchTerm/SearchTerm';
+import { Cart } from '../features/cart/cartComponent'; 
+import { Inventory } from '../features/inventory/inventoryComponent';
+import { CurrencyFilter } from '../features/currencyFilter/currencyFilterComponent';
+import { SearchTerm } from '../features/searchTerm/searchTermComponent';
 
 function getFilteredItems(items, searchTerm) {
   return items.filter(items => items.name.toLowerCase().includes(searchTerm.toLowerCase()));
